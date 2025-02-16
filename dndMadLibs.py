@@ -97,9 +97,8 @@ def generate_character():
         "Race": race,
         "Class": char_class,
         "Personality": personality,
-        "Background": background,
         "Weapon": weapon,
-        "Starting Equipment": equipment
+        "Starting Equipment": equipment,
     }
 
     # Print the character details
@@ -111,8 +110,7 @@ def generate_character():
             print(f"{key}: {value}")
 
     # Print the background followed by the character summary
-    print(f"\nBackground: I was born as a {character['Race']}. {character['Background']} Now, I am a {character['Class']} and go by {character['Name']}.")
-    print(f"I am known for being {character['Personality']}.")
+    print(f"\nBackground: I was born as a {character['Race']}.  {background} Now, I am a {character['Class']} and go by {character['Name']}. I am known for being {character['Personality']}.")
 
     return character
 
