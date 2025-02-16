@@ -18,31 +18,11 @@ background_templates = [
     "My family was known for {legacy}, but I chose to follow my own path after {lifeChangingEvent}."
 ]
 
-def madlibs_background():
-    """Generates a Mad Libs-style background by asking the user for inputs."""
-    template = random.choice(background_templates)
-    
-    # Use regular expressions to find placeholders (words between {})
-    blanks = re.findall(r'\{([^}]+)\}', template)
-    
-    filled_values = {}
-    print("\nLet's create your backstory! Fill in the blanks:")
 
-    # Fill in blanks by asking the user for input. If input is empty, use a default value.
-    for blank in blanks:
-        value = input(f"Enter a {blank}: ").strip()
-        filled_values[blank] = value if value else f"mysterious {blank}"
-
-    # Replace placeholders in the template with the filled values
-    for blank, value in filled_values.items():
-        template = template.replace(f"{{{blank}}}", value)
-
-    return template
-
-def freestyle_background():
-    """Allows the user to describe their background freely."""
-    print("\nDescribe your background:")
-    return input("> ").strip() or "A mysterious past filled with adventure and secrets."
+def roll_ability_scores():
+    """Rolls ability scores using the 4d6 drop lowest method."""
+    return {stat: sum(sorted([random.randint(1, 6) for _ in range(4)])[1:]) for stat in 
+            ["STR", "DEX", "CON", "INT", "WIS", "CHA"]}
 
 def choose_option(prompt, options):
     """Prompts the user to choose an option or select 'random'."""
@@ -67,6 +47,49 @@ def choose_or_describe(prompt, options):
 
     user_input = input("> ").strip()
     return random.choice(options) if user_input.lower() == "random" else user_input
+def madlibs_background():
+    """Generates a Mad Libs-style background by asking the user for inputs."""
+    template = random.choice(background_templates)
+    
+    # Use regular expressions to find placeholders (words between {})
+    blanks = re.findall(r'\{([^}]+)\}', template)
+    
+    filled_values = {}
+    print("\nLet's create your backstory! Fill in the blanks:")
+
+    # Fill in blanks by asking the user for input. If input is empty, use a default value.
+    for blank in blanks:
+        value = input(f"Enter a {blank}: ").strip()
+        filled_values[blank] = value if value else f"mysterious {blank}"
+
+    # Replace placeholders in the template with the filled values
+    for blank, value in filled_values.items():
+        template = template.replace(f"{{{blank}}}", value)
+
+    return template
+   
+def freestyle_background():
+    """Allows the user to describe their background freely."""
+    print("\nDescribe your background:")
+    return input("> ").strip() or "A mysterious past filled with adventure and secrets."
+
+def choose_background_option():
+    """Lets the user choose the background style: random, freestyle, or madlibs."""
+    print("\nChoose your background style:")
+    print("1. Random")
+    print("2. Freestyle (write your own)")
+    print("3. Mad Libs (fill in the blanks)")
+
+    choice = input("Enter a number: ").strip()
+    if choice == "1":
+        return "I grew up in a quiet village, but my destiny called me to adventure."
+    elif choice == "2":
+        return freestyle_background()
+    elif choice == "3":
+        return madlibs_background()
+    else:
+        print("Invalid choice, defaulting to random.")
+        return "I grew up in a quiet village, but my destiny called me to adventure."
 
 def generate_character():
     """Generates a full D&D character with user-selected or random attributes."""
@@ -78,6 +101,7 @@ def generate_character():
     race = choose_option("Choose your race:", races)
     char_class = choose_option("Choose your class:", classes)
     personality = choose_or_describe("Describe your personality or type 'random':", personalities)
+<<<<<<< HEAD
     background_style = input("\nChoose your background style (Enter \n'1' for random, \n'2' for freestyle, or \n'3' for Mad Libs): ").strip().lower()
 
     if background_style == '3':
@@ -93,10 +117,16 @@ def generate_character():
 
     # Character data
     character = {
+=======
+    background = choose_background_option()
+
+    return {
+>>>>>>> parent of 2ca1dad (improved output print statement)
         "Name": name,
         "Race": race,
         "Class": char_class,
         "Personality": personality,
+<<<<<<< HEAD
         "Weapon": weapon,
         "Starting Equipment": equipment,
     }
@@ -114,10 +144,24 @@ def generate_character():
 
     return character
 
+=======
+        "Background": background,
+        "Weapon": random.choice(weapons),
+        "Starting Equipment": random.choice(starting_equipment),
+        "Stats": roll_ability_scores()
+    }
+
+>>>>>>> parent of 2ca1dad (improved output print statement)
 if __name__ == "__main__":
     print("D&D Character Generator\n")
     while True:
         char = generate_character()
-
+        print("\n--- Your Character ---")
+        for key, value in char.items():
+            if isinstance(value, dict):
+                print(f"{key}: {', '.join([f'{k}: {v}' for k, v in value.items()])}")
+            else:
+                print(f"{key}: {value}")
+        
         if input("\nGenerate another character? (y/n): ").strip().lower() != "y":
             break
