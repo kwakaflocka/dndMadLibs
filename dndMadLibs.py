@@ -78,11 +78,11 @@ def generate_character():
     race = choose_option("Choose your race:", races)
     char_class = choose_option("Choose your class:", classes)
     personality = choose_or_describe("Describe your personality or type 'random':", personalities)
-    background_style = input("\nChoose your background style (random, freestyle, madlibs): ").strip().lower()
+    background_style = input("\nChoose your background style (Enter \n'1' for random, \n'2' for freestyle, or \n'3' for Mad Libs): ").strip().lower()
 
-    if background_style == 'madlibs':
+    if background_style == '3':
         background = madlibs_background()
-    elif background_style == 'freestyle':
+    elif background_style == '2':
         background = freestyle_background()
     else:
         background = "I grew up in a quiet village, but my destiny called me to adventure."
